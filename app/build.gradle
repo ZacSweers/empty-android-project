@@ -1,0 +1,191 @@
+buildscript {
+    dependencies {
+        classpath rootProject.ext.androidPlugin
+        classpath rootProject.ext.psyncPlugin
+        classpath rootProject.ext.versionsPlugin
+        classpath rootProject.ext.aptPlugin
+        classpath rootProject.ext.sdkManagerPlugin
+    }
+}
+
+//apply plugin: 'android-sdk-manager'   // Add back after https://github.com/JakeWharton/sdk-manager-plugin/issues/99
+apply plugin: 'com.android.application'
+apply plugin: 'com.flipboard.psync'
+apply plugin: 'com.github.ben-manes.versions'   // ./gradlew dependencyUpdates -Drevision=release
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    useLibrary 'org.apache.http.legacy'
+
+    defaultConfig {
+        applicationId "io.sweers.placeholder"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.gitCommitCount
+        versionName rootProject.ext.gitTag
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField 'String', 'GIT_SHA', "\"${gitSha}\""
+        buildConfigField 'long', 'GIT_TIMESTAMP', "${gitTimestamp}"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+    signingConfigs {
+        release {
+            storeFile file("placeholder")
+            keyAlias "placeholder"
+            storePassword "placeholder"
+            keyPassword "placeholder"
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-dev"
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
+        preDexLibraries = !rootProject.ext.ci
+    }
+    applicationVariants.all { variant ->
+        // Delete unaligned APKs and manifest junk after
+        def assembleTask = "assemble${variant.name.capitalize()}"
+        tasks[assembleTask].doLast {
+            cleanOutputDir(file("build/outputs/apk/"))
+
+            // Enable by adding "-P notify" to end of your ./gradlew command
+            if (project.hasProperty("notify")) {
+                "terminal-notifier -message '${assembleTask}-->DONE' -sound 'Ping'".execute()
+            }
+        }
+    }
+    lintOptions {
+        abortOnError true
+        check 'NewApi', 'InlinedApi'
+        fatal 'NewApi', 'InlinedApi'
+        enable 'UnusedResources'
+        checkReleaseBuilds true
+        textReport rootProject.ext.ci
+        textOutput 'stdout'
+        htmlReport !rootProject.ext.ci
+        xmlReport !rootProject.ext.ci
+    }
+}
+
+// My standard tech stack
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile rootProject.ext.supportAnnotations
+    compile rootProject.ext.supportAppCompat
+    compile rootProject.ext.supportV4
+
+    compile rootProject.ext.butterKnife
+    compile rootProject.ext.glide
+    compile rootProject.ext.glideOkhttp
+    compile rootProject.ext.okhttp
+    compile rootProject.ext.rxAndroid
+    compile rootProject.ext.rxBinding
+    compile rootProject.ext.rxJava
+    compile rootProject.ext.rxLifecycle
+    compile rootProject.ext.timber
+
+    testCompile rootProject.ext.assertj
+    testCompile rootProject.ext.assertjAndroid
+    testCompile rootProject.ext.junit
+    testCompile rootProject.ext.robolectric
+    testCompile rootProject.ext.truth
+    testCompile rootProject.ext.supportAnnotations
+    testCompile rootProject.ext.supportV4
+    testCompile rootProject.ext.supportTestRunner
+    testCompile rootProject.ext.supportTestRules
+    testCompile rootProject.ext.supportTestEspresso
+
+    debugCompile rootProject.ext.leakCanary
+    releaseCompile rootProject.ext.leakCanaryNoop
+}
+
+// Here so the version plugin can work, REMOVE THIS IN PROJECT
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile rootProject.ext.kotlinStdlib
+    compile rootProject.ext.kotterKnife
+
+    compile rootProject.ext.supportAnnotations
+    compile rootProject.ext.supportAppCompat
+    compile rootProject.ext.supportCardView
+    compile rootProject.ext.supportCustomTabs
+    compile rootProject.ext.supportDesign
+    compile rootProject.ext.supportPalette
+    compile rootProject.ext.supportPercent
+    compile rootProject.ext.supportPreference
+    compile rootProject.ext.supportRecyclerView
+    compile rootProject.ext.supportV4
+    compile rootProject.ext.multidex
+    compile "com.google.android.gms:play-services:${rootProject.ext.playServicesVersion}"
+
+    compile rootProject.ext.glide
+    compile rootProject.ext.glideOkhttp
+    compile rootProject.ext.bottomsheet
+    compile rootProject.ext.bottomsheetCommons
+    compile rootProject.ext.calligraphy
+    compile rootProject.ext.gson
+    compile(rootProject.ext.materialDialogs) {
+        transitive = true
+    }
+    compile rootProject.ext.stetho
+    compile rootProject.ext.stethoOkHttp
+
+    apt rootProject.ext.barberCompiler
+    compile rootProject.ext.barberApi
+    compile rootProject.ext.rxPalette
+    compile rootProject.ext.rxPaletteKotlin
+
+    compile rootProject.ext.rxAndroid
+    compile rootProject.ext.rxBinding
+    compile rootProject.ext.rxJava
+    compile rootProject.ext.rxLifecycle
+    compile rootProject.ext.rxPreferences
+
+    compile rootProject.ext.butterKnife
+    debugCompile rootProject.ext.leakCanary
+    releaseCompile rootProject.ext.leakCanaryNoop
+    compile rootProject.ext.okhttp
+    compile rootProject.ext.retrofit
+    compile rootProject.ext.retrofitMoshi
+    compile rootProject.ext.retrofitRxJava
+    compile rootProject.ext.timber
+
+    testCompile rootProject.ext.assertj
+    testCompile rootProject.ext.assertjAndroid
+    testCompile rootProject.ext.supportAnnotations
+    testCompile rootProject.ext.supportV4
+    testCompile rootProject.ext.supportTestRunner
+    testCompile rootProject.ext.supportTestRules
+    testCompile rootProject.ext.supportTestEspresso
+    testCompile rootProject.ext.supportTestEspressoContrib
+    testCompile rootProject.ext.supportRecyclerView
+    testCompile rootProject.ext.hamcrest
+    testCompile rootProject.ext.junit
+    testCompile rootProject.ext.mockito
+    testCompile rootProject.ext.robolectric
+    testCompile rootProject.ext.truth
+}
