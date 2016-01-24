@@ -108,16 +108,8 @@ dependencies {
     compile rootProject.ext.rxLifecycle
     compile rootProject.ext.timber
 
-    testCompile rootProject.ext.assertj
-    testCompile rootProject.ext.assertjAndroid
-    testCompile rootProject.ext.junit
-    testCompile rootProject.ext.robolectric
-    testCompile rootProject.ext.truth
-    testCompile rootProject.ext.supportAnnotations
-    testCompile rootProject.ext.supportV4
-    testCompile rootProject.ext.supportTestRunner
-    testCompile rootProject.ext.supportTestRules
-    testCompile rootProject.ext.supportTestEspresso
+    testCompile project(':testing-utils')
+    androidTestCompile project(':testing-utils')
 
     debugCompile rootProject.ext.leakCanary
     releaseCompile rootProject.ext.leakCanaryNoop
@@ -174,18 +166,6 @@ dependencies {
     compile rootProject.ext.retrofitRxJava
     compile rootProject.ext.timber
 
-    testCompile rootProject.ext.assertj
-    testCompile rootProject.ext.assertjAndroid
-    testCompile rootProject.ext.supportAnnotations
-    testCompile rootProject.ext.supportV4
-    testCompile rootProject.ext.supportTestRunner
-    testCompile rootProject.ext.supportTestRules
-    testCompile rootProject.ext.supportTestEspresso
-    testCompile rootProject.ext.supportTestEspressoContrib
-    testCompile rootProject.ext.supportRecyclerView
-    testCompile rootProject.ext.hamcrest
-    testCompile rootProject.ext.junit
-    testCompile rootProject.ext.mockito
-    testCompile rootProject.ext.robolectric
-    testCompile rootProject.ext.truth
+    testCompile project(':testing-utils')
+    androidTestCompile project(':testing-utils')
 }

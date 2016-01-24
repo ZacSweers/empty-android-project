@@ -9,11 +9,19 @@ apply plugin: 'com.android.library'
 dependencies {
     compile rootProject.ext.assertj
     compile rootProject.ext.assertjAndroid
+    compile rootProject.ext.rxJava
     compile rootProject.ext.rxAndroid
     compile rootProject.ext.supportAnnotations
-    compile rootProject.ext.supportTestEspresso
-    compile rootProject.ext.supportTestRunner
+    compile rootProject.ext.supportRecyclerView
+    compile rootProject.ext.supportV4
+    compile rootProject.ext.junit
+    compile rootProject.ext.robolectric
     compile rootProject.ext.truth
+    compile rootProject.ext.supportTestRunner
+    compile rootProject.ext.supportTestRules
+    compile rootProject.ext.supportTestEspresso
+    compile rootProject.ext.supportTestEspressoContrib
+    compile rootProject.ext.supportTestEspressoWeb
 }
 
 android {
