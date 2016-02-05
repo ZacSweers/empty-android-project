@@ -7,7 +7,7 @@ ext {
     ci = 'true'.equals(System.getenv('CI'))
 
     // Kotlin
-    kotlinVersion = '1.0.0-beta-4589'
+    kotlinVersion = '1.0.0-rc-1036'
     kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     kotlinAndroidAnnotaitons = "org.jetbrains.kotlin:kotlin-android-sdk-annotations:$kotlinVersion"
@@ -26,7 +26,7 @@ ext {
     supportRecyclerView = "com.android.support:recyclerview-v7:$supportVersion"
     supportV4 = "com.android.support:support-v4:$supportVersion"
     multidex = 'com.android.support:multidex:1.0.1'
-    androidPlugin = 'com.android.tools.build:gradle:2.0.0-alpha7'
+    androidPlugin = 'com.android.tools.build:gradle:2.0.0-beta2'
     playServicesVersion = '8.4.0'
 
     // Dagger
@@ -76,7 +76,7 @@ ext {
     okhttp = "com.squareup.okhttp3:okhttp:$okhttpVersion"
     okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
     okhttpWebSockets = "com.squareup.okhttp3:okhttp-ws:$okhttpVersion"
-    retrofitVersion = '2.0.0-beta3'
+    retrofitVersion = '2.0.0-beta4'
     retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
     retrofitMoshi = "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     retrofitRxJava = "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
