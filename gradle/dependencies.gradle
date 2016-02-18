@@ -7,7 +7,7 @@ ext {
     ci = 'true'.equals(System.getenv('CI'))
 
     // Kotlin
-    kotlinVersion = '1.0.0-rc-1036'
+    kotlinVersion = '1.0.0'
     kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     kotlinAndroidAnnotaitons = "org.jetbrains.kotlin:kotlin-android-sdk-annotations:$kotlinVersion"
@@ -26,7 +26,7 @@ ext {
     supportRecyclerView = "com.android.support:recyclerview-v7:$supportVersion"
     supportV4 = "com.android.support:support-v4:$supportVersion"
     multidex = 'com.android.support:multidex:1.0.1'
-    androidPlugin = 'com.android.tools.build:gradle:2.0.0-beta2'
+    androidPlugin = 'com.android.tools.build:gradle:2.0.0-beta5'
     playServicesVersion = '8.4.0'
 
     // Dagger
@@ -43,8 +43,8 @@ ext {
     calligraphy = 'uk.co.chrisjenx:calligraphy:2.1.0'
     glide = 'com.github.bumptech.glide:glide:3.7.0'
     glideOkhttp = 'com.github.bumptech.glide:okhttp-integration:1.4.0@aar'
-    gson = 'com.google.code.gson:gson:2.5'
-    materialDialogs = 'com.github.afollestad.material-dialogs:core:0.8.5.3@aar'
+    gson = 'com.google.code.gson:gson:2.6.1'
+    materialDialogs = 'com.github.afollestad.material-dialogs:core:0.8.5.4@aar'
     psyncPlugin = 'gradle.plugin.com.flipboard:psync:1.1.5'
     stethoVersion = '1.3.0'
     stetho = "com.facebook.stetho:stetho:$stethoVersion"
@@ -55,7 +55,7 @@ ext {
     barberVersion = '1.3.1'
     barberCompiler = "io.sweers.barber:barber-compiler:$barberVersion"
     barberApi = "io.sweers.barber:barber-api:$barberVersion"
-    rxPaletteVersion = '0.2.0'
+    rxPaletteVersion = '0.3.0'
     rxPalette = "io.sweers.rxpalette:rxpalette:$rxPaletteVersion"
     rxPaletteKotlin = "io.sweers.rxpalette:rxpalette-kotlin:$rxPaletteVersion"
 
@@ -63,7 +63,7 @@ ext {
     rxAndroid = 'io.reactivex:rxandroid:1.1.0'
     rxBindingVersion = '0.3.0'
     rxBinding = "com.jakewharton.rxbinding:rxbinding:$rxBindingVersion"
-    rxJava = 'io.reactivex:rxjava:1.1.0'
+    rxJava = 'io.reactivex:rxjava:1.1.1'
     rxLifecycle = 'com.trello:rxlifecycle:0.4.0'
     rxPreferences = 'com.f2prateek.rx.preferences:rx-preferences:1.0.1'
 
@@ -72,7 +72,7 @@ ext {
     leakCanaryVersion = '1.4-beta1'
     leakCanary = "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
     leakCanaryNoop = "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
-    okhttpVersion = '3.0.1'
+    okhttpVersion = '3.1.2'
     okhttp = "com.squareup.okhttp3:okhttp:$okhttpVersion"
     okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
     okhttpWebSockets = "com.squareup.okhttp3:okhttp-ws:$okhttpVersion"
