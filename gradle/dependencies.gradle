@@ -61,7 +61,7 @@ ext {
 
     // Rx
     rxAndroid = 'io.reactivex:rxandroid:1.1.0'
-    rxBindingVersion = '0.3.0'
+    rxBindingVersion = '0.4.0'
     rxBinding = "com.jakewharton.rxbinding:rxbinding:$rxBindingVersion"
     rxJava = 'io.reactivex:rxjava:1.1.1'
     rxLifecycle = 'com.trello:rxlifecycle:0.4.0'
@@ -81,7 +81,7 @@ ext {
     retrofitMoshi = "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     retrofitRxJava = "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
     sdkManagerPlugin = 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
-    timber = 'com.jakewharton.timber:timber:4.1.0'
+    timber = 'com.jakewharton.timber:timber:4.1.1'
 
     // Testing
     assertj = 'org.assertj:assertj-core:2.2.0'
