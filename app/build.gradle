@@ -140,9 +140,6 @@ dependencies {
     compile rootProject.ext.bottomsheetCommons
     compile rootProject.ext.calligraphy
     compile rootProject.ext.gson
-    compile(rootProject.ext.materialDialogs) {
-        transitive = true
-    }
     compile rootProject.ext.stetho
     compile rootProject.ext.stethoOkHttp
 
