@@ -27,6 +27,7 @@ android {
         versionName rootProject.ext.gitTag
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
 
         buildConfigField 'String', 'GIT_SHA', "\"${gitSha}\""
         buildConfigField 'long', 'GIT_TIMESTAMP', "${gitTimestamp}"
@@ -70,7 +71,7 @@ android {
         // Delete unaligned APKs and manifest junk after
         def assembleTask = "assemble${variant.name.capitalize()}"
         tasks[assembleTask].doLast {
-            cleanOutputDir(file("build/outputs/apk/"))
+//            cleanOutputDir(file("build/outputs/apk/"))
 
             // Enable by adding "-P notify" to end of your ./gradlew command
             if (project.hasProperty("notify")) {
