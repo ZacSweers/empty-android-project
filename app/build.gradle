@@ -154,11 +154,13 @@ dependencies {
     compile rootProject.ext.rxJava
     compile rootProject.ext.rxLifecycle
     compile rootProject.ext.rxPreferences
+    compile rootProject.ext.rxRelay
 
     compile rootProject.ext.butterKnife
     debugCompile rootProject.ext.leakCanary
     releaseCompile rootProject.ext.leakCanaryNoop
     compile rootProject.ext.okhttp
+    compile rootProject.ext.okio
     compile rootProject.ext.retrofit
     compile rootProject.ext.retrofitMoshi
     compile rootProject.ext.retrofitRxJava

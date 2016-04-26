@@ -11,7 +11,7 @@ android:
   components:
     - tools                             # Tools
     - platform-tools                    # Platform tools
-    - build-tools-23.0.2                # Build tools version
+    - build-tools-23.0.3                # Build tools version
     - android-23                        # Target SDK version
     - extra-android-support             # Support repo
     - extra-android-m2repository        # Support repo... 2?
