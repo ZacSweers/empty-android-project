@@ -1,20 +1,20 @@
 ext {
     // Build
     minSdkVersion = 21
-    targetSdkVersion = 23
-    compileSdkVersion = 23
-    buildToolsVersion = '23.0.3'
+    targetSdkVersion = 24
+    compileSdkVersion = 24
+    buildToolsVersion = '24.0.1'
     ci = 'true'.equals(System.getenv('CI'))
 
     // Kotlin
-    kotlinVersion = '1.0.2'
+    kotlinVersion = '1.0.3'
     kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     kotlinAndroidAnnotaitons = "org.jetbrains.kotlin:kotlin-android-sdk-annotations:$kotlinVersion"
     kotterKnife = 'com.jakewharton:kotterknife:0.1.0-SNAPSHOT'
 
     // Google
-    supportVersion = '23.4.0'
+    supportVersion = '24.2.0'
     supportAnnotations = "com.android.support:support-annotations:$supportVersion"
     supportAppCompat = "com.android.support:appcompat-v7:$supportVersion"
     supportCardView = "com.android.support:cardview-v7:$supportVersion"
@@ -26,29 +26,29 @@ ext {
     supportRecyclerView = "com.android.support:recyclerview-v7:$supportVersion"
     supportV4 = "com.android.support:support-v4:$supportVersion"
     multidex = 'com.android.support:multidex:1.0.1'
-    androidPlugin = 'com.android.tools.build:gradle:2.1.0'
-    playServicesVersion = '8.4.0'
+    androidPlugin = 'com.android.tools.build:gradle:2.2.0-beta2'
+    playServicesVersion = '9.4.0'
 
     // Dagger
-    daggerVersion = '2.3.0'
+    daggerVersion = '2.6.0'
     dagger = "com.google.dagger:dagger:$daggerVersion"
     daggerCompiler = "com.google.dagger:dagger-compiler:$daggerVersion"
     javax = 'org.glassfish:javax.annotation:10.0-b28'
 
     // Misc
     aptPlugin = 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    bottomsheetVersion = '1.5.0'
+    bottomsheetVersion = '1.5.1'
     bottomsheet = "com.flipboard:bottomsheet-core:$bottomsheetVersion"
     bottomsheetCommons = "com.flipboard:bottomsheet-commons:$bottomsheetVersion"
     calligraphy = 'uk.co.chrisjenx:calligraphy:2.2.0'
     glide = 'com.github.bumptech.glide:glide:3.7.0'
     glideOkhttp = 'com.github.bumptech.glide:okhttp-integration:1.4.0@aar'
-    gson = 'com.google.code.gson:gson:2.6.2'
+    gson = 'com.google.code.gson:gson:2.7'
     psyncPlugin = 'gradle.plugin.com.flipboard:psync:1.1.5'
     stethoVersion = '1.3.1'
     stetho = "com.facebook.stetho:stetho:$stethoVersion"
     stethoOkHttp = "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
-    versionsPlugin = 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
+    versionsPlugin = 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
 
     // Personal
     barberVersion = '1.3.1'
@@ -59,30 +59,30 @@ ext {
     rxPaletteKotlin = "io.sweers.rxpalette:rxpalette-kotlin:$rxPaletteVersion"
 
     // Rx
-    rxAndroid = 'io.reactivex:rxandroid:1.2.0'
+    rxAndroid = 'io.reactivex:rxandroid:1.2.1'
     rxBindingVersion = '0.4.0'
     rxBinding = "com.jakewharton.rxbinding:rxbinding:$rxBindingVersion"
-    rxJava = 'io.reactivex:rxjava:1.1.5'
+    rxJava = 'io.reactivex:rxjava:1.1.9'
     rxLifecycle = 'com.trello:rxlifecycle:0.6.1'
-    rxPreferences = 'com.f2prateek.rx.preferences:rx-preferences:1.0.1'
+    rxPreferences = 'com.f2prateek.rx.preferences:rx-preferences:1.0.2'
     rxRelay = 'com.jakewharton.rxrelay:rxrelay:1.1.0'
 
     // Square and JW
-    butterKnife = 'com.jakewharton:butterknife:8.0.1'
+    butterKnife = 'com.jakewharton:butterknife:8.2.1'
     leakCanaryVersion = '1.4-beta2'
     leakCanary = "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
     leakCanaryNoop = "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
-    okhttpVersion = '3.2.0'
+    okhttpVersion = '3.4.1'
     okhttp = "com.squareup.okhttp3:okhttp:$okhttpVersion"
     okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
     okhttpWebSockets = "com.squareup.okhttp3:okhttp-ws:$okhttpVersion"
-    okio = 'com.squareup.okio:okio:1.8.0'
-    retrofitVersion = '2.0.2'
+    okio = 'com.squareup.okio:okio:1.9.0'
+    retrofitVersion = '2.1.0'
     retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
     retrofitMoshi = "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     retrofitRxJava = "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
     sdkManagerPlugin = 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
-    timber = 'com.jakewharton.timber:timber:4.1.2'
+    timber = 'com.jakewharton.timber:timber:4.3.0'
 
     // Testing
     assertj = 'org.assertj:assertj-core:2.2.0'

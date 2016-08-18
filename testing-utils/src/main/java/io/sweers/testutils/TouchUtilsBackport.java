@@ -101,12 +101,12 @@ public final class TouchUtilsBackport {
         }
 
         switch (gravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
-            case Gravity.LEFT:
+            case Gravity.START:
                 break;
             case Gravity.CENTER_HORIZONTAL:
                 xy[0] += viewWidth / 2;
                 break;
-            case Gravity.RIGHT:
+            case Gravity.END:
                 xy[0] += viewWidth - 1;
                 break;
             default:
