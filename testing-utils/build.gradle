@@ -8,6 +8,7 @@ apply plugin: 'com.android.library'
 
 dependencies {
     compile deps.misc.jsr305Annotations
+    compile deps.misc.okio
     compile deps.rx.android
     compile deps.rx.java
     compile deps.support.annotations

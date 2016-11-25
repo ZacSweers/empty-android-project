@@ -107,6 +107,7 @@ dependencies {
   annotationProcessor deps.apt.butterKnife
   compile deps.misc.glide
   compile deps.misc.glideOkhttp
+  compile deps.misc.okio
   compile deps.misc.timber
   compile deps.okhttp.core
   compile deps.rx.android
