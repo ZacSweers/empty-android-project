@@ -1,1 +1,1 @@
-include ':app', ':testing-utils', ':zalib'
+include ':app', ':testing-utils'
