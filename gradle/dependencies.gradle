@@ -1,112 +1,164 @@
-ext {
-    // Build
-    minSdkVersion = 21
-    targetSdkVersion = 24
-    compileSdkVersion = 24
-    buildToolsVersion = '24.0.1'
-    ci = 'true'.equals(System.getenv('CI'))
+def versions = [
+    assertjAndroid: '1.1.1',
+    barber: '1.3.1',
+    butterKnife: '8.4.0',
+    dagger: '2.8',
+    espresso: '2.3-alpha',
+    kotlin: '1.0.5-2',
+    leakCanary: '1.5',
+    okhttp: '3.4.2',
+    playServices: '10.0.0',
+    retrofit: '2.1.0',
+    rxBinding: '0.4.0',
+    rxPalette: '0.3.0',
+    stetho: '1.4.1',
+    support: '25.0.1',
+    supportTest: '0.6-alpha'
+]
 
-    // Kotlin
-    kotlinVersion = '1.0.3'
-    kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    kotlinAndroidAnnotaitons = "org.jetbrains.kotlin:kotlin-android-sdk-annotations:$kotlinVersion"
-    kotterKnife = 'com.jakewharton:kotterknife:0.1.0-SNAPSHOT'
+def apt = [
+    butterKnife: 'com.jakewharton:butterknife-compiler:8.4.0',
+    javax: 'org.glassfish:javax.annotation:10.0-b28'
+]
 
-    // Google
-    supportVersion = '24.2.0'
-    supportAnnotations = "com.android.support:support-annotations:$supportVersion"
-    supportAppCompat = "com.android.support:appcompat-v7:$supportVersion"
-    supportCardView = "com.android.support:cardview-v7:$supportVersion"
-    supportCustomTabs = "com.android.support:customtabs:$supportVersion"
-    supportDesign = "com.android.support:design:$supportVersion"
-    supportPalette = "com.android.support:palette-v7:$supportVersion"
-    supportPercent = "com.android.support:percent:$supportVersion"
-    supportPreference = "com.android.support:preference-v7:$supportVersion"
-    supportRecyclerView = "com.android.support:recyclerview-v7:$supportVersion"
-    supportV4 = "com.android.support:support-v4:$supportVersion"
-    multidex = 'com.android.support:multidex:1.0.1'
-    androidPlugin = 'com.android.tools.build:gradle:2.2.0-beta2'
-    playServicesVersion = '9.4.0'
+def barber = [
+    apt: [
+        compiler: "io.sweers.barber:barber-compiler:${versions.barber}",
+    ],
+    api: "io.sweers.barber:barber-api:${versions.barber}"
+]
 
-    // Dagger
-    daggerVersion = '2.6.0'
-    dagger = "com.google.dagger:dagger:$daggerVersion"
-    daggerCompiler = "com.google.dagger:dagger-compiler:$daggerVersion"
-    javax = 'org.glassfish:javax.annotation:10.0-b28'
-
-    // Misc
-    aptPlugin = 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    bottomsheetVersion = '1.5.1'
-    bottomsheet = "com.flipboard:bottomsheet-core:$bottomsheetVersion"
-    bottomsheetCommons = "com.flipboard:bottomsheet-commons:$bottomsheetVersion"
-    calligraphy = 'uk.co.chrisjenx:calligraphy:2.2.0'
-    glide = 'com.github.bumptech.glide:glide:3.7.0'
-    glideOkhttp = 'com.github.bumptech.glide:okhttp-integration:1.4.0@aar'
-    gson = 'com.google.code.gson:gson:2.7'
-    psyncPlugin = 'gradle.plugin.com.flipboard:psync:1.1.5'
-    stethoVersion = '1.3.1'
-    stetho = "com.facebook.stetho:stetho:$stethoVersion"
-    stethoOkHttp = "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
-    versionsPlugin = 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
-
-    // Personal
-    barberVersion = '1.3.1'
-    barberCompiler = "io.sweers.barber:barber-compiler:$barberVersion"
-    barberApi = "io.sweers.barber:barber-api:$barberVersion"
-    rxPaletteVersion = '0.3.0'
-    rxPalette = "io.sweers.rxpalette:rxpalette:$rxPaletteVersion"
-    rxPaletteKotlin = "io.sweers.rxpalette:rxpalette-kotlin:$rxPaletteVersion"
-
-    // Rx
-    rxAndroid = 'io.reactivex:rxandroid:1.2.1'
-    rxBindingVersion = '0.4.0'
-    rxBinding = "com.jakewharton.rxbinding:rxbinding:$rxBindingVersion"
-    rxJava = 'io.reactivex:rxjava:1.1.9'
-    rxLifecycle = 'com.trello:rxlifecycle:0.6.1'
-    rxPreferences = 'com.f2prateek.rx.preferences:rx-preferences:1.0.2'
-    rxRelay = 'com.jakewharton.rxrelay:rxrelay:1.1.0'
-
-    // Square and JW
-    butterKnife = 'com.jakewharton:butterknife:8.2.1'
-    leakCanaryVersion = '1.4-beta2'
-    leakCanary = "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
-    leakCanaryNoop = "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
-    okhttpVersion = '3.4.1'
-    okhttp = "com.squareup.okhttp3:okhttp:$okhttpVersion"
-    okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
-    okhttpWebSockets = "com.squareup.okhttp3:okhttp-ws:$okhttpVersion"
-    okio = 'com.squareup.okio:okio:1.9.0'
-    retrofitVersion = '2.1.0'
-    retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    retrofitMoshi = "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
-    retrofitRxJava = "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
-    sdkManagerPlugin = 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
-    timber = 'com.jakewharton.timber:timber:4.3.0'
-
-    // Testing
-    assertj = 'org.assertj:assertj-core:2.2.0'
-    assertjAndroidVersion = '1.1.1'
-    assertjAndroid = "com.squareup.assertj:assertj-android:$assertjAndroidVersion"
-    hamcrest = 'org.hamcrest:hamcrest-core:1.3'
-    junit = 'junit:junit:4.12'
-    mockito = 'org.mockito:mockito-all:1.10.19'
-    robolectric = 'org.robolectric:robolectric:3.0'
-    truth = 'com.google.truth:truth:0.28'
-
-    // Espresso
-    supportTestVersion = '0.4.1'
-    supportTestRunner = "com.android.support.test:runner:$supportTestVersion"
-    supportTestRules = "com.android.support.test:rules:$supportTestVersion"
-    supportTestEspressoVersion = '2.2.1'
-    supportTestEspresso = "com.android.support.test.espresso:espresso-core:$supportTestEspressoVersion"
-    supportTestEspressoContrib = "com.android.support.test.espresso:espresso-contrib:$supportTestEspressoVersion"
-    supportTestEspressoWeb = "com.android.support.test.espresso:espresso-web:$supportTestEspressoVersion"
+def build = [
+    buildToolsVersion: '25.0.1',
+    compileSdkVersion: 25,
+    ci: 'true' == System.getenv('CI'),
+    minSdkVersion: 21,
+    targetSdkVersion: 25,
 
     // query git for the SHA, Tag and commit count. Use these to automate versioning.
-    gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
-    gitTag = 'git describe --tags'.execute([], project.rootDir).text.trim()
-    gitCommitCount = 100 + Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim() ?: '0')
-    gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
-    gitTimestamp = 'git log -n 1 --format=%at'.execute([], rootDir).text.trim()
-}
+    gitSha: 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim(),
+    gitTag: 'git describe --tags'.execute([], project.rootDir).text.trim(),
+    gitCommitCount: 100 + Integer.parseInt(
+        'git rev-list --count HEAD'.execute([], project.rootDir).text.trim() ?: '0'),
+    gitTimestamp: 'git log -n 1 --format=%at'.execute([], rootDir).text.trim(),
+
+    gradlePlugins: [
+        android: 'com.android.tools.build:gradle:2.3.0-alpha2',
+        kotlin: "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
+        psync: 'gradle.plugin.com.flipboard:psync:1.1.5',
+        versions: 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
+    ]
+]
+
+def dagger = [
+    apt: [
+        compiler: "com.google.dagger:dagger-compiler:${versions.dagger}"
+    ],
+    android: "com.google.dagger:dagger-android:${versions.dagger}",
+    core: "com.google.dagger:dagger:${versions.dagger}",
+]
+
+def debug = [
+    leakCanary: "com.squareup.leakcanary:leakcanary-android:${versions.leakCanary}",
+    stetho: "com.facebook.stetho:stetho:${versions.stetho}",
+    stethoOkHttp: "com.facebook.stetho:stetho-okhttp3:${versions.stetho}",
+]
+
+def kotlin = [
+    stdlib: "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
+]
+
+def misc = [
+    glide: 'com.github.bumptech.glide:glide:3.7.0',
+    glideOkhttp: 'com.github.bumptech.glide:okhttp-integration:1.4.0@aar',
+    gson: 'com.google.code.gson:gson:2.8.0',
+    jsr305Annotations: 'com.google.code.findbugs:jsr305:3.0.1',
+    leakCanaryNoop: "com.squareup.leakcanary:leakcanary-android-no-op:${versions.leakCanary}",
+    okio: 'com.squareup.okio:okio:1.11.0',
+    timber: 'com.jakewharton.timber:timber:4.3.1'
+]
+
+def okhttp = [
+    core: "com.squareup.okhttp3:okhttp:${versions.okhttp}",
+    loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",
+    webSockets: "com.squareup.okhttp3:okhttp-ws:${versions.okhttp}"
+]
+
+def playServices = [
+    gcm: "com.google.android.gms:play-services-gcm:${versions.playServices}"
+]
+
+def retrofit = [
+    core: "com.squareup.retrofit2:retrofit:${versions.retrofit}",
+    moshi: "com.squareup.retrofit2:converter-moshi:${versions.retrofit}",
+    rxJava: "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0"
+]
+
+def rx = [
+    android: 'io.reactivex.rxjava2:rxandroid:2.0.1',
+    binding: "com.jakewharton.rxbinding:rxbinding:${versions.rxBinding}",
+    java: 'io.reactivex.rxjava2:rxjava:2.0.1',
+    lifecycle: 'com.trello.rxlifecycle2:rxlifecycle:2.0.1',
+    preferences: 'com.f2prateek.rx.preferences:rx-preferences:1.0.2',
+    relay: 'com.jakewharton.rxrelay:rxrelay:1.2.0'
+]
+
+def rxPalette = [
+    core: "io.sweers.rxpalette:rxpalette:${versions.rxPalette}",
+    kotlin: "io.sweers.rxpalette:rxpalette-kotlin:${versions.rxPalette}"
+]
+
+def support = [
+    annotations: "com.android.support:support-annotations:${versions.support}",
+    appCompat: "com.android.support:appcompat-v7:${versions.support}",
+    cardView: "com.android.support:cardview-v7:${versions.support}",
+    customTabs: "com.android.support:customtabs:${versions.support}",
+    design: "com.android.support:design:${versions.support}",
+    multidex: 'com.android.support:multidex:1.0.1',
+    palette: "com.android.support:palette-v7:${versions.support}",
+    percent: "com.android.support:percent:${versions.support}",
+    preference: "com.android.support:preference-v7:${versions.support}",
+    recyclerView: "com.android.support:recyclerview-v7:${versions.support}",
+    v4: "com.android.support:support-v4:${versions.support}",
+]
+
+def test = [
+    androidOnly: [
+        espresso: [
+            core: "com.android.support.test.espresso:espresso-core:${versions.espresso}",
+            contrib: "com.android.support.test.espresso:espresso-contrib:${versions.espresso}",
+            web: "com.android.support.test.espresso:espresso-web:${versions.espresso}"
+
+        ],
+        support: [
+            runner: "com.android.support.test:runner:${versions.supportTest}",
+            rules: "com.android.support.test:rules:${versions.supportTest}"
+        ]
+    ],
+    unitOnly: [
+        robolectric: 'org.robolectric:robolectric:3.1.4'
+    ],
+    assertj: 'org.assertj:assertj-core:2.2.0',
+    assertjAndroid: "com.squareup.assertj:assertj-android:${versions.assertjAndroid}",
+    junit: 'junit:junit:4.12',
+    mockito: 'org.mockito:mockito-core:2.1.0',
+    truth: 'com.google.truth:truth:0.30'
+]
+
+ext.deps = [
+    "apt": apt,
+    "barber": barber,
+    "build": build,
+    "dagger": dagger,
+    "debug": debug,
+    "kotlin": kotlin,
+    "misc": misc,
+    "okhttp": okhttp,
+    "playServices": playServices,
+    "retrofit": retrofit,
+    "rx": rx,
+    "rxPalette": rxPalette,
+    "support": support,
+    "test": test,
+    "versions": versions
+]

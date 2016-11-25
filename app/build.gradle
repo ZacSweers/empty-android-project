@@ -1,171 +1,173 @@
 buildscript {
-    dependencies {
-        classpath rootProject.ext.androidPlugin
-        classpath rootProject.ext.psyncPlugin
-        classpath rootProject.ext.versionsPlugin
-        classpath rootProject.ext.aptPlugin
-        classpath rootProject.ext.sdkManagerPlugin
-    }
+  dependencies {
+    classpath deps.build.gradlePlugins.android
+    classpath deps.build.gradlePlugins.psync
+    classpath deps.build.gradlePlugins.versions
+  }
 }
 
-//apply plugin: 'android-sdk-manager'   // Add back after https://github.com/JakeWharton/sdk-manager-plugin/issues/99
 apply plugin: 'com.android.application'
 apply plugin: 'com.flipboard.psync'
-apply plugin: 'com.github.ben-manes.versions'   // ./gradlew dependencyUpdates -Drevision=release
-apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.github.ben-manes.versions' // ./gradlew dependencyUpdates -Drevision=release
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
-    useLibrary 'org.apache.http.legacy'
+  compileSdkVersion deps.build.compileSdkVersion
+  buildToolsVersion deps.build.buildToolsVersion
 
-    defaultConfig {
-        applicationId "io.sweers.placeholder"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.gitCommitCount
-        versionName rootProject.ext.gitTag
-        multiDexEnabled true
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
+  defaultConfig {
+    applicationId "io.sweers.placeholder"
+    minSdkVersion deps.build.minSdkVersion
+    targetSdkVersion deps.build.targetSdkVersion
+    versionCode deps.build.gitCommitCount
+    versionName deps.build.gitTag
+    multiDexEnabled true
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    vectorDrawables.useSupportLibrary = true
 
-        buildConfigField 'String', 'GIT_SHA', "\"${gitSha}\""
-        buildConfigField 'long', 'GIT_TIMESTAMP', "${gitTimestamp}"
+    buildConfigField 'String', 'GIT_SHA', "\"${deps.build.gitSha}\""
+    buildConfigField 'long', 'GIT_TIMESTAMP', "${deps.build.gitTimestamp}"
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_7
+    targetCompatibility JavaVersion.VERSION_1_7
+  }
+  signingConfigs {
+    release {
+      storeFile file("placeholder")
+      keyAlias "placeholder"
+      storePassword "placeholder"
+      keyPassword "placeholder"
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+  }
+  packagingOptions {
+    exclude 'META-INF/LICENSE'
+    exclude 'META-INF/NOTICE'
+    exclude 'LICENSE.txt'
+    exclude 'META-INF/NOTICE.txt'
+    exclude 'META-INF/LICENSE.txt'
+    exclude 'META-INF/services/javax.annotation.processing.Processor'
+  }
+  buildTypes {
+    debug {
+      applicationIdSuffix ".debug"
+      versionNameSuffix "-dev"
     }
-    signingConfigs {
-        release {
-            storeFile file("placeholder")
-            keyAlias "placeholder"
-            storePassword "placeholder"
-            keyPassword "placeholder"
-        }
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      signingConfig signingConfigs.release
     }
-    packagingOptions {
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE'
-        exclude 'LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/services/javax.annotation.processing.Processor'
-    }
-    buildTypes {
-        debug {
-            applicationIdSuffix ".debug"
-            versionNameSuffix "-dev"
-        }
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-        }
-    }
-    dexOptions {
-        javaMaxHeapSize "4g"
-        preDexLibraries = !rootProject.ext.ci
-    }
-    applicationVariants.all { variant ->
-        // Delete unaligned APKs and manifest junk after
-        def assembleTask = "assemble${variant.name.capitalize()}"
-        tasks[assembleTask].doLast {
-//            cleanOutputDir(file("build/outputs/apk/"))
+  }
+  dexOptions {
+    javaMaxHeapSize "4g"
+    preDexLibraries = !deps.build.ci
+  }
+  applicationVariants.all { variant ->
+    // Delete unaligned APKs and manifest junk after
+    def assembleTask = "assemble${variant.name.capitalize()}"
+    tasks[assembleTask].doLast {
+      //            cleanOutputDir(file("build/outputs/apk/"))
 
-            // Enable by adding "-P notify" to end of your ./gradlew command
-            if (project.hasProperty("notify")) {
-                "terminal-notifier -message '${assembleTask}-->DONE' -sound 'Ping'".execute()
-            }
-        }
+      // Enable by adding "-P notify" to end of your ./gradlew command
+      if (project.hasProperty("notify")) {
+        "terminal-notifier -message '${assembleTask}-->DONE' -sound 'Ping'".execute()
+      }
     }
-    lintOptions {
-        abortOnError true
-        check 'NewApi', 'InlinedApi'
-        fatal 'NewApi', 'InlinedApi'
-        enable 'UnusedResources'
-        checkReleaseBuilds true
-        textReport rootProject.ext.ci
-        textOutput 'stdout'
-        htmlReport !rootProject.ext.ci
-        xmlReport !rootProject.ext.ci
+  }
+  lintOptions {
+    abortOnError true
+    check 'NewApi', 'InlinedApi'
+    fatal 'NewApi', 'InlinedApi'
+    enable 'UnusedResources'
+    checkReleaseBuilds true
+    textReport deps.build.ci
+    textOutput 'stdout'
+    htmlReport !deps.build.ci
+    xmlReport !deps.build.ci
+  }
+}
+
+def supportLibraries = configurations.create("supportCompile")
+configurations.all {
+  resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+    if (details.requested.group == 'com.android.support' && details.requested.name != 'multidex') {
+      // We want to force all support libraries to use the same version, even if they're transitive.
+      details.useVersion deps.versions.support
     }
+    if (details.requested.group == 'com.google.android.gms') {
+      // We want to force all play services libraries to use the same version, even if they're transitive.
+      details.useVersion deps.versions.playServices
+    }
+  }
 }
 
 // My standard tech stack
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile rootProject.ext.supportAnnotations
-    compile rootProject.ext.supportAppCompat
-    compile rootProject.ext.supportV4
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  annotationProcessor deps.apt.butterKnife
+  compile deps.misc.glide
+  compile deps.misc.glideOkhttp
+  compile deps.misc.timber
+  compile deps.okhttp.core
+  compile deps.rx.android
+  compile deps.rx.binding
+  compile deps.rx.java
+  compile deps.rx.lifecycle
+  supportCompile deps.support.annotations
+  supportCompile deps.support.appCompat
+  supportCompile deps.support.v4
 
-    compile rootProject.ext.butterKnife
-    compile rootProject.ext.glide
-    compile rootProject.ext.glideOkhttp
-    compile rootProject.ext.okhttp
-    compile rootProject.ext.rxAndroid
-    compile rootProject.ext.rxBinding
-    compile rootProject.ext.rxJava
-    compile rootProject.ext.rxLifecycle
-    compile rootProject.ext.timber
+  compile supportLibraries
+  testCompile supportLibraries
+  androidTestCompile supportLibraries
 
-    testCompile project(':testing-utils')
-    androidTestCompile project(':testing-utils')
+  testCompile project(':testing-utils')
+  androidTestCompile project(':testing-utils')
 
-    debugCompile rootProject.ext.leakCanary
-    releaseCompile rootProject.ext.leakCanaryNoop
+  debugCompile deps.debug.leakCanary
+  releaseCompile deps.misc.leakCanaryNoop
 }
 
-// Here so the version plugin can work, REMOVE THIS IN PROJECT
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile rootProject.ext.kotlinStdlib
-    compile rootProject.ext.kotterKnife
-
-    compile rootProject.ext.supportAnnotations
-    compile rootProject.ext.supportAppCompat
-    compile rootProject.ext.supportCardView
-    compile rootProject.ext.supportCustomTabs
-    compile rootProject.ext.supportDesign
-    compile rootProject.ext.supportPalette
-    compile rootProject.ext.supportPercent
-    compile rootProject.ext.supportPreference
-    compile rootProject.ext.supportRecyclerView
-    compile rootProject.ext.supportV4
-    compile rootProject.ext.multidex
-    compile "com.google.android.gms:play-services:${rootProject.ext.playServicesVersion}"
-
-    compile rootProject.ext.glide
-    compile rootProject.ext.glideOkhttp
-    compile rootProject.ext.bottomsheet
-    compile rootProject.ext.bottomsheetCommons
-    compile rootProject.ext.calligraphy
-    compile rootProject.ext.gson
-    compile rootProject.ext.stetho
-    compile rootProject.ext.stethoOkHttp
-
-    apt rootProject.ext.barberCompiler
-    compile rootProject.ext.barberApi
-    compile rootProject.ext.rxPalette
-    compile rootProject.ext.rxPaletteKotlin
-
-    compile rootProject.ext.rxAndroid
-    compile rootProject.ext.rxBinding
-    compile rootProject.ext.rxJava
-    compile rootProject.ext.rxLifecycle
-    compile rootProject.ext.rxPreferences
-    compile rootProject.ext.rxRelay
-
-    compile rootProject.ext.butterKnife
-    debugCompile rootProject.ext.leakCanary
-    releaseCompile rootProject.ext.leakCanaryNoop
-    compile rootProject.ext.okhttp
-    compile rootProject.ext.okio
-    compile rootProject.ext.retrofit
-    compile rootProject.ext.retrofitMoshi
-    compile rootProject.ext.retrofitRxJava
-    compile rootProject.ext.timber
-
-    testCompile project(':testing-utils')
-    androidTestCompile project(':testing-utils')
+// Here so the versions plugin can work, REMOVE THIS IN PROJECT
+applyDependencyMap("deps", deps)
+private void applyDependencyMap(String name, Map map) {
+  if (name == "versions" || name == "build") {
+    // These don't go in deps
+    return
+  }
+  map.each { k, v ->
+    if (v instanceof Map) {
+      applyDependencyMap(k, v)
+      return
+    }
+    switch (name) {
+      case 'apt':
+        dependencies.add('annotationProcessor', v)
+        return
+      case 'debug':
+        dependencies.add('debugCompile', v)
+        return
+      case 'test':
+        dependencies.add('testCompile', v)
+        dependencies.add('androidTestCompile', v)
+        return
+      case 'unitOnly':
+        dependencies.add('testCompile', v)
+        return
+      case 'espresso':
+        dependencies.add('androidTestCompile', v)
+        return
+      case 'support':
+        if (k == 'runner' || k == 'rules') {
+          dependencies.add('androidTestCompile', v)
+        } else if (k != 'multidex') {
+          dependencies.add('supportCompile', v)
+        } else {
+          dependencies.add("compile", v)
+        }
+        return
+      default:
+        dependencies.add("compile", v)
+    }
+  }
 }

@@ -1,35 +1,36 @@
 buildscript {
     dependencies {
-        classpath rootProject.ext.androidPlugin
+        classpath deps.build.gradlePlugins.android
     }
 }
 
 apply plugin: 'com.android.library'
 
 dependencies {
-    compile rootProject.ext.assertj
-    compile rootProject.ext.assertjAndroid
-    compile rootProject.ext.rxJava
-    compile rootProject.ext.rxAndroid
-    compile rootProject.ext.supportAnnotations
-    compile rootProject.ext.supportRecyclerView
-    compile rootProject.ext.supportV4
-    compile rootProject.ext.junit
-    compile rootProject.ext.robolectric
-    compile rootProject.ext.truth
-    compile rootProject.ext.supportTestRunner
-    compile rootProject.ext.supportTestRules
-    compile rootProject.ext.supportTestEspresso
-    compile rootProject.ext.supportTestEspressoContrib
-    compile rootProject.ext.supportTestEspressoWeb
+    compile deps.misc.jsr305Annotations
+    compile deps.rx.android
+    compile deps.rx.java
+    compile deps.support.annotations
+    compile deps.support.recyclerView
+    compile deps.support.v4
+    compile deps.test.androidOnly.espresso.contrib
+    compile deps.test.androidOnly.espresso.core
+    compile deps.test.androidOnly.espresso.web
+    compile deps.test.androidOnly.support.rules
+    compile deps.test.androidOnly.support.runner
+    compile deps.test.assertj
+    compile deps.test.assertjAndroid
+    compile deps.test.junit
+    compile deps.test.truth
+    compile deps.test.unitOnly.robolectric
 }
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion deps.build.compileSdkVersion
+    buildToolsVersion deps.build.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
+        minSdkVersion deps.build.minSdkVersion
     }
 
     compileOptions {
@@ -38,7 +39,7 @@ android {
     }
 
     dexOptions {
-        preDexLibraries = !rootProject.ext.ci
+        preDexLibraries = !deps.build.ci
     }
 
     lintOptions {
