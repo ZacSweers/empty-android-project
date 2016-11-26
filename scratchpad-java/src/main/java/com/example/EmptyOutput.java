@@ -21,9 +21,11 @@ class EmptyOutput extends RequestBody {
 
   @Override
   public long contentLength() {
-    return 0;
+    return 2;
   }
 
   @Override
-  public void writeTo(BufferedSink sink) throws IOException { }
+  public void writeTo(BufferedSink sink) throws IOException {
+    sink.writeUtf8("{}");
+  }
 }
