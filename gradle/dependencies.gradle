@@ -4,15 +4,15 @@ def versions = [
     butterKnife: '8.4.0',
     dagger: '2.8',
     espresso: '2.3-alpha',
-    kotlin: '1.0.5-2',
+    kotlin: '1.0.5-3',
     leakCanary: '1.5',
     okhttp: '3.4.2',
     playServices: '10.0.0',
     retrofit: '2.1.0',
-    rxBinding: '0.4.0',
+    rxBinding: '1.0.0',
     rxPalette: '0.3.0',
     stetho: '1.4.1',
-    support: '25.0.1',
+    support: '25.1.0',
     supportTest: '0.6-alpha'
 ]
 
@@ -29,7 +29,7 @@ def barber = [
 ]
 
 def build = [
-    buildToolsVersion: '25.0.1',
+    buildToolsVersion: '25.0.2',
     compileSdkVersion: 25,
     ci: 'true' == System.getenv('CI'),
     minSdkVersion: 21,
@@ -43,7 +43,7 @@ def build = [
     gitTimestamp: 'git log -n 1 --format=%at'.execute([], rootDir).text.trim(),
 
     gradlePlugins: [
-        android: 'com.android.tools.build:gradle:2.3.0-alpha2',
+        android: 'com.android.tools.build:gradle:2.3.0-alpha3',
         kotlin: "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
         psync: 'gradle.plugin.com.flipboard:psync:1.1.5',
         versions: 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
